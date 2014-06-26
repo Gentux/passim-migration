@@ -3,7 +3,6 @@
 eval "$(docopts -V - -h - : "$@" <<EOF
 Usage: reset.sh [options] [(-r <PETITPOIS_CONFIG_FILE>)]
 
-      --unsafe                  Don\'t check if dump is there
       -r, --repair              Repair broken POIs
       -v, --verbose             Generate verbose messages.
       -h, --help                Show help options.
