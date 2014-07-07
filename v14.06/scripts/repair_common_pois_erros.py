@@ -34,54 +34,54 @@ OBSOLETE_SCHEME_NAMES = [
 ]
 
 INFORMATION_SERVICES_FIELDS = [
-    u"Nom du service"
-    u"Alias"
-    u"Nom Opérateur SI"
-    u"URL Opérateur SI"
-    u"Offres de transport"
-    u"Niveau"
-    u"Territoire couvert"
-    u"Service d'information multimodale"
-    u"Logo"
-    u"Notes"
-    u"Site web - URL"
-    u"Site web - Types d'informations"
-    u"Site web - Notes"
-    u"Site web - Langues"
-    u"Application mobile - Intitulé"
-    u"Application mobile - Types d'informations"
-    u"Application mobile - Web mobile"
-    u"Application mobile - iPhone"
-    u"Application mobile - Android"
-    u"Application mobile - Windows mobile"
-    u"Application mobile - Notes"
-    u"Application mobile - Langues"
-    u"Centre d'appel - Intitulé"
-    u"Centre d'appel - Téléphone"
-    u"Centre d'appel - Horaires d'ouverture"
-    u"Centre d'appel - Notes"
-    u"Open data - Intitulé"
-    u"Open data - URL de la page d'accueil du portail Open Data"
-    u"Open data - URL de la page TC"
-    u"Open data - Types d'informations"
-    u"Open data - Licence"
-    u"Open data - URL de la licence"
-    u"Open data - Notes"
-    u"Service web - Intitulé"
-    u"Service web - URL"
-    u"Service web - Types d'informations"
-    u"Service web - Licence"
-    u"Service web - Notes"
-    u"Comarquage - Type de marque"
-    u"Comarquage - URL"
-    u"Comarquage - Notes"
-    u"Guichet d'information - Intitulé"
-    u"Guichet d'information - Adresse"
-    u"Guichet d'information - Téléphone"
-    u"Guichet d'information - Courriel"
-    u"Guichet d'information - Horaires d'ouverture"
-    u"Guichet d'information - Géolocalisation"
-    u"Guichet d'information - Notes"
+    u"Nom du service",
+    u"Alias",
+    u"Nom Opérateur SI",
+    u"URL Opérateur SI",
+    u"Offres de transport",
+    u"Niveau",
+    u"Territoire couvert",
+    u"Service d'information multimodale",
+    u"Logo",
+    u"Notes",
+    u"Site web - URL",
+    u"Site web - Types d'informations",
+    u"Site web - Notes",
+    u"Site web - Langues",
+    u"Application mobile - Intitulé",
+    u"Application mobile - Types d'informations",
+    u"Application mobile - Web mobile",
+    u"Application mobile - iPhone",
+    u"Application mobile - Android",
+    u"Application mobile - Windows mobile",
+    u"Application mobile - Notes",
+    u"Application mobile - Langues",
+    u"Centre d'appel - Intitulé",
+    u"Centre d'appel - Téléphone",
+    u"Centre d'appel - Horaires d'ouverture",
+    u"Centre d'appel - Notes",
+    u"Open data - Intitulé",
+    u"Open data - URL de la page d'accueil du portail Open Data",
+    u"Open data - URL de la page TC",
+    u"Open data - Types d'informations",
+    u"Open data - Licence",
+    u"Open data - URL de la licence",
+    u"Open data - Notes",
+    u"Service web - Intitulé",
+    u"Service web - URL",
+    u"Service web - Types d'informations",
+    u"Service web - Licence",
+    u"Service web - Notes",
+    u"Comarquage - Type de marque",
+    u"Comarquage - URL",
+    u"Comarquage - Notes",
+    u"Guichet d'information - Intitulé",
+    u"Guichet d'information - Adresse",
+    u"Guichet d'information - Téléphone",
+    u"Guichet d'information - Courriel",
+    u"Guichet d'information - Horaires d'ouverture",
+    u"Guichet d'information - Géolocalisation",
+    u"Guichet d'information - Notes",
     ]
 
 
@@ -113,29 +113,39 @@ def label_index(poi, field_id, label_dict_pairs):
 
 
 def reorder_poi_fields(poi, schema):
-    poi_metadata_copy = copy.deepcopy(poi['metadata'])
-    poi_fields_tuples = [
-        (field_id, poi_metadata_copy[field_id].pop(0).get('label'))
-        for field_id in poi['metadata']['positions']
-        ]
-    schema_fields_tuples = [
-        (field['id'], field['label'])
-        for field in schema.get('fields', [])
-        ]
-    new_positions = []
-    for field_tuple in schema_fields_tuples:
-        if field_tuple in poi_fields_tuples:
-            new_positions.append(field_tuple[0])
-            poi_fields_tuples.pop(poi_fields_tuples.index(field_tuple))
-    for field_tuple in poi_fields_tuples:
-        new_positions.append(field_tuple[0])
-    return new_positions
+    new_poi = {
+        '_id': poi['_id'],
+        'metadata': {
+            'last-update': poi['metadata']['last-update'],
+            'positions': [],
+            'slug': poi['metadata']['slug'],
+            'title': poi['metadata']['title'],
+            'schema-name': poi['metadata']['schema-name'],
+            }
+        }
+    for field_info in schema['fields']:
+        field_id = field_info['id']
+
+        old_poi_field_value = field_value(poi, field_id, [('label', field_info['label'])])
+        old_poi_field_index_value = label_index(poi, field_id, [('label', field_info['label'])])
+        if old_poi_field_value is None:
+            continue
+
+        if field_id == 'territories':
+            new_poi.setdefault(field_id, []).append(poi[field_id][old_poi_field_index_value])
+        else:
+            new_poi.setdefault(field_id, []).append(old_poi_field_value)
+        new_poi['metadata'].setdefault(field_id, []).append(poi['metadata'][field_id][old_poi_field_index_value])
+        new_poi['metadata']['positions'].append(field_id)
+    return new_poi
 
 
 def sort_schema_field(schema):
     return sorted(
         schema['fields'],
-        key = lambda field: INFORMATION_SERVICES_FIELDS.index(field.get('label')),
+        key = lambda field:
+            INFORMATION_SERVICES_FIELDS.index(field['label'])
+            if field['label'] in INFORMATION_SERVICES_FIELDS else len(INFORMATION_SERVICES_FIELDS),
         )
 
 
@@ -160,11 +170,8 @@ def main():
         schema_by_name[schema['name']] = schema
 
         for poi in db.pois.find({'metadata.schema-name': schema['name']}):
-            new_positions = reorder_poi_fields(poi, schema)
-
-            if poi['metadata']['positions'] != new_positions:
-                poi['metadata']['positions'] = new_positions
-                db.pois.save(poi)
+            new_poi = reorder_poi_fields(poi, schema)
+            db.pois.save(new_poi)
     return 0
 
 
