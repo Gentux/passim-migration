@@ -33,57 +33,55 @@ OBSOLETE_SCHEME_NAMES = [
     u'SiteWeb',
 ]
 
-
 INFORMATION_SERVICES_FIELDS = [
-    u"Nom du service",
-    u"Alias",
-    u"Opérateur",
-    u"Offres de transport",
-    u"Service d'information multimodale",
-    u"Niveau",
-    u"Territoire couvert",
-    u"Logo",
-    u"Notes",
-    u"Site web - URL",
-    u"Site web - Types d'informations",
-    u"Site web - Notes",
-    u"Site web - Langues",
-    u"Application mobile - Intitulé",
-    u"Application mobile - iPhone",
-    u"Application mobile - Android",
-    u"Application mobile - Types d'informations",
-    u"Application mobile - Web mobile",
-    u"Application mobile - Notes",
-    u"Application mobile - Blackberry",
-    u"Application mobile - Windows mobile",
-    u"Application mobile - Langues",
-    u"Centre d'appel - Intitulé",
-    u"Centre d'appel - Téléphone",
-    u"Centre d'appel - Notes",
-    u"Centre d'appel - Horaires d'ouverture",
-    u"Guichet d'information - Intitulé",
-    u"Guichet d'information - Adresse",
-    u"Guichet d'information - Téléphone",
-    u"Guichet d'information - Géolocalisation",
-    u"Guichet d'information - Fax",
-    u"Guichet d'information - Courriel",
-    u"Guichet d'information - Horaires d'ouverture",
-    u"Guichet d'information - Notes",
-    u"Open data - Intitulé",
-    u"Open data - URL de la page d'accueil du portail Open Data",
-    u"Open data - URL de la page TC",
-    u"Open data - Types d'informations",
-    u"Open data - Licence",
-    u"Open data - URL de la licence",
-    u"Open data - Notes",
-    u"Service web - Intitulé",
-    u"Service web - URL",
-    u"Service web - Types d'informations",
-    u"Service web - Licence",
-    u"Service web - Notes",
-    u"Comarquage - Type de marque",
-    u"Comarquage - URL",
-    u"Comarquage - Note",
+    u"Nom du service"
+    u"Alias"
+    u"Nom Opérateur SI"
+    u"URL Opérateur SI"
+    u"Offres de transport"
+    u"Niveau"
+    u"Territoire couvert"
+    u"Service d'information multimodale"
+    u"Logo"
+    u"Notes"
+    u"Site web - URL"
+    u"Site web - Types d'informations"
+    u"Site web - Notes"
+    u"Site web - Langues"
+    u"Application mobile - Intitulé"
+    u"Application mobile - Types d'informations"
+    u"Application mobile - Web mobile"
+    u"Application mobile - iPhone"
+    u"Application mobile - Android"
+    u"Application mobile - Windows mobile"
+    u"Application mobile - Notes"
+    u"Application mobile - Langues"
+    u"Centre d'appel - Intitulé"
+    u"Centre d'appel - Téléphone"
+    u"Centre d'appel - Horaires d'ouverture"
+    u"Centre d'appel - Notes"
+    u"Open data - Intitulé"
+    u"Open data - URL de la page d'accueil du portail Open Data"
+    u"Open data - URL de la page TC"
+    u"Open data - Types d'informations"
+    u"Open data - Licence"
+    u"Open data - URL de la licence"
+    u"Open data - Notes"
+    u"Service web - Intitulé"
+    u"Service web - URL"
+    u"Service web - Types d'informations"
+    u"Service web - Licence"
+    u"Service web - Notes"
+    u"Comarquage - Type de marque"
+    u"Comarquage - URL"
+    u"Comarquage - Notes"
+    u"Guichet d'information - Intitulé"
+    u"Guichet d'information - Adresse"
+    u"Guichet d'information - Téléphone"
+    u"Guichet d'information - Courriel"
+    u"Guichet d'information - Horaires d'ouverture"
+    u"Guichet d'information - Géolocalisation"
+    u"Guichet d'information - Notes"
     ]
 
 
