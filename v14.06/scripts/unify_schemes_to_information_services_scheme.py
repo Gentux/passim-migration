@@ -123,6 +123,14 @@ def main():
             continue
 
         schema_name = poi['metadata']['schema-name']
+        guichet_information_number = len(
+            filter(
+                lambda i: i['label'] == u"Guichet d'information - Intitul\xe9",
+                information_services_by_id[information_service_id]['metadata']['name'],
+                )
+            )
+        if schema_name == 'GuichetInformation' and guichet_information_number > 0:
+            continue
         for field_id, metadata in merging_fields_by_schema_name.get(schema_name, []):
             field_metadata_dict = field_metadata(
                 poi,
