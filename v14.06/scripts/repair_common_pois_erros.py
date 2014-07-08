@@ -35,8 +35,8 @@ OBSOLETE_SCHEME_NAMES = [
 INFORMATION_SERVICES_FIELDS = [
     u"Nom du service",
     u"Alias",
-    u"Nom Opérateur SI",
-    u"URL Opérateur SI",
+    u"Opérateur - Nom",
+    u"Opérateur - URL",
     u"Offres de transport",
     u"Niveau",
     u"Territoire couvert",
@@ -140,6 +140,25 @@ def reorder_poi_fields(poi, schema):
 
 
 def sort_schema_field(schema):
+    if len(filter(lambda item: item.get('label') in [u'Opérateur - Nom', u'Opérateur - URL'], schema['fields'])) == 0:
+        schema['fields'].append({
+            u'id': u'name',
+            u'label': u'Opérateur - Nom',
+            u'placeholder': u'',
+            u'protected': u'0',
+            u'required': u'0',
+            u'tooltip': u'',
+            u'value': u'',
+            })
+        schema['fields'].append({
+            u'id': u'url',
+            u'label': u'Opérateur - URL',
+            u'placeholder': u'',
+            u'protected': u'0',
+            u'required': u'0',
+            u'tooltip': u'',
+            u'value': u'',
+            })
     return filter(
         lambda field: field['label'] in INFORMATION_SERVICES_FIELDS,
         sorted(
