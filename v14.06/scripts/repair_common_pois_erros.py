@@ -7,7 +7,6 @@ Use POIs from different schemes and unify them in only one information services 
 
 
 import argparse
-import copy
 import logging
 import os
 import sys
@@ -141,12 +140,15 @@ def reorder_poi_fields(poi, schema):
 
 
 def sort_schema_field(schema):
-    return sorted(
-        schema['fields'],
-        key = lambda field:
-            INFORMATION_SERVICES_FIELDS.index(field['label'])
-            if field['label'] in INFORMATION_SERVICES_FIELDS else len(INFORMATION_SERVICES_FIELDS),
-        )
+    return filter(
+        lambda field: field['label'] in INFORMATION_SERVICES_FIELDS,
+        sorted(
+            schema['fields'],
+            key = lambda field:
+                INFORMATION_SERVICES_FIELDS.index(field['label'])
+                if field['label'] in INFORMATION_SERVICES_FIELDS else len(INFORMATION_SERVICES_FIELDS),
+            ),
+    )
 
 
 def main():
