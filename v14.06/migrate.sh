@@ -22,11 +22,15 @@ SCRIPT_FILENAME=$(readlink -e $0)
 SCRIPT_DIR=$(dirname ${SCRIPT_FILENAME})/scripts
 DUMP_DIR=$(dirname ${SCRIPT_FILENAME})/mongodb_dump
 PETITPOIS_DIR=$(python -c "import petitpois; print petitpois.__path__[0]")
+ETALAGE_DIR=$(python -c "import etalagepassim; print etalagepassim.__path__[0]")
 
 if [ ! -d ${DUMP_DIR}/souk_passim ]; then
     echo 'You need to make dumps before upgrading';
     exit 1
 fi
+
+[ $repair = 'true' ] && python ${ETALAGE_DIR}/scripts/update_db_change_field_name.py \
+    -v -s "Comarquage" -i "text-block" -l "Note" -nl "Notes" ${PETITPOIS_CONFIG_FILE}
 
 python ${SCRIPT_DIR}/unify_schemes_to_information_services_scheme.py
 
